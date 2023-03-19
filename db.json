@@ -37,6 +37,11 @@
       "id": 3,
       "firstName": "Sara",
       "lastName": "Wilson"
+    },
+    {
+      "firstName": "member to switch redux toolkit",
+      "lastName": "tool",
+      "id": 4
     }
   ]
 }
