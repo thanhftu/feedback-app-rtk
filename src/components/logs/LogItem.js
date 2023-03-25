@@ -1,13 +1,16 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import Moment from "react-moment";
-import { deletetLogs, setCurrent } from "../../actions/logActions";
 import M from "materialize-css/dist/js/materialize.min.js";
+import { deleteLog, setCurrent } from "../../features/logSlice";
 
-function LogItem({ log, deletetLogs, setCurrent }) {
+function LogItem({log}) {
+  // { log, deletetLogs, setCurrent }
+
+  const dispatch = useDispatch()
   const onDelete = () => {
-    deletetLogs(log.id);
+   dispatch(deleteLog(log.id));
     M.toast({ html: `log ${log.id} deleted` });
   };
   return (
@@ -18,7 +21,7 @@ function LogItem({ log, deletetLogs, setCurrent }) {
           className={`modal-trigger ${
             log.attention ? "red-text" : "blue-text"
           }`}
-          onClick={() => setCurrent(log)}
+          onClick={() =>dispatch(setCurrent(log))}
         >
           {log.message}
         </a>
@@ -43,8 +46,8 @@ function LogItem({ log, deletetLogs, setCurrent }) {
 
 LogItem.propTypes = {
   log: PropTypes.object.isRequired,
-  deletetLogs: PropTypes.func.isRequired,
-  setCurrent: PropTypes.func.isRequired,
+  // deletetLogs: PropTypes.func.isRequired,
+  // setCurrent: PropTypes.func.isRequired,
 };
 
-export default connect(null, { deletetLogs, setCurrent })(LogItem);
+export default LogItem;

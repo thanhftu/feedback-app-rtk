@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { getTechs } from "../../actions/techActions";
+import { useDispatch,useSelector } from "react-redux";
+import { getTechs } from "../../features/techSlice";
 import TechItem from "./TechItem";
-import PropTypes from "prop-types";
 
-function TechListModal({ tech: { techs, loading }, getTechs }) {
+function TechListModal() {
+  const dispatch=useDispatch()
+  
   useEffect(() => {
-    getTechs();
+   dispatch(getTechs());
   }, []);
+  const {techs,loading}=useSelector((state)=>state.techs)
   // const fetchTech = async () => {
   //   setIsLoading(true);
   //   const response = await fetch("/techs");
@@ -16,7 +18,8 @@ function TechListModal({ tech: { techs, loading }, getTechs }) {
   //   setTechs(data);
   //   setIsLoading(false);
   // };
-
+  // { tech: { techs, loading }, getTechs }
+// console.log(techs)
   return (
     <div id="tech-list-modal" className="modal">
       <div className="modal-content">
@@ -31,12 +34,12 @@ function TechListModal({ tech: { techs, loading }, getTechs }) {
   );
 }
 
-TechListModal.propTypes = {
-  tech: PropTypes.object.isRequired,
-  getTechs: PropTypes.func.isRequired,
-};
-const mapStateToProps = (state) => ({
-  tech: state.tech,
-});
+// TechListModal.propTypes = {
+//   tech: PropTypes.object.isRequired,
+//   getTechs: PropTypes.func.isRequired,
+// };
+// const mapStateToProps = (state) => ({
+//   tech: state.tech,
+// });
 
-export default connect(mapStateToProps, { getTechs })(TechListModal);
+export default TechListModal;

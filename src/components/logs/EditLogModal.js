@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
-import { updateLog } from "../../actions/logActions";
+import { updateLog } from "../../features/logSlice";
 import TechSelectOption from "../techs/TechSelectOption";
 
-function EditLogModal({ current, updateLog }) {
+function EditLogModal() {
+  // { current, updateLog }
+  const {current}=useSelector((state)=>state.logs)
+  const dispatch=useDispatch()
   const [message, setMassage] = useState("");
   const [attention, setAttention] = useState(false);
   const [tech, setTech] = useState("");
@@ -28,7 +31,7 @@ function EditLogModal({ current, updateLog }) {
         attention,
         date: new Date(),
       };
-      updateLog(updLog);
+     dispatch(updateLog(updLog));
       M.toast({ html: `Log ${current.id} updated by ${tech}` });
 
       //clear field
@@ -108,8 +111,8 @@ const modalStyle = {
   alignItems: "center",
 };
 
-const mapStateToProps = (state) => ({
-  current: state.log.current,
-});
+// const mapStateToProps = (state) => ({
+//   current: state.log.current,
+// });
 
-export default connect(mapStateToProps, { updateLog })(EditLogModal);
+export default EditLogModal;

@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-import { addTech } from "../../actions/techActions";
+import { addTechs } from "../../features/techSlice";
 
-function AddTechModal({ addTech }) {
+function AddTechModal() {
+  const dispatch=useDispatch()
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
@@ -17,7 +18,7 @@ function AddTechModal({ addTech }) {
         firstName,
         lastName,
       };
-      addTech(newTech);
+      dispatch(addTechs(newTech));
       M.toast({ html: `added new techician ${firstName} ${lastName}` });
       setFirstName("");
       setLastName("");
@@ -76,8 +77,8 @@ const modalStyle = {
   alignItems: "center",
 };
 
-AddTechModal.propTypes = {
-  addTech: PropTypes.func.isRequired,
-};
+// AddTechModal.propTypes = {
+//   addTech: PropTypes.func.isRequired,
+// };
 
-export default connect(null, { addTech })(AddTechModal);
+export default AddTechModal;
